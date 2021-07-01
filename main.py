@@ -133,6 +133,23 @@ def SelectTable(Dname):
     print('Table Selected Connected')
     RecordOptions(Dname, Tname, column, names)
 
+def DeleteTable(Dname):
+    mydb = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="FREDLY2505",
+        database=Dname
+    )
+    mycursor = mydb.cursor()
+    mycursor.execute("SHOW TABLES")
+    result = mycursor.fetchall()
+    print(tabulate(result,headers=["TABLES"]))
+
+    Tname = input("Enter the Table Name:")
+    sql = "DROP TABLE " + Tname
+    mycursor.execute(sql)    
+    print('Table deleted')
+
 def InsertData(Dname, Tname, column, names):
     mydb = mysql.connector.connect(
         host="localhost",
@@ -255,7 +272,8 @@ def TableOption(Dname):
         1. Create Table
         2. Show Tables
         3. Selete Table
-        4. Back
+        4. Delete Table
+        5. Back
     """)
     choice = int(input("Enter Your Option:"))
     if choice == 1:
